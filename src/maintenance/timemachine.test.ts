@@ -153,7 +153,7 @@ describe('clearTimeMachineSnapshots', () => {
 
     expect(result.success).toBe(false);
     expect(result.requiresSudo).toBe(true);
-    expect(result.error).toContain('sudo mac-cleaner-cli maintenance --timemachine');
+    expect(result.error).toContain('sudo clean-my-machine maintenance --timemachine');
   });
 
   it('reports partial failures', async () => {

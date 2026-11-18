@@ -164,7 +164,7 @@ export async function cleanCommand(options: CleanCommandOptions): Promise<CleanS
     console.log();
     console.log(chalk.cyan(`Backup is ON — items will be MOVED to ${getBackupDir()}`));
     console.log(
-      chalk.yellow('⚠ Moving does NOT free disk space. Run "mac-cleaner-cli backup --clean" to reclaim it.')
+      chalk.yellow('⚠ Moving does NOT free disk space. Run "clean-my-machine backup --clean" to reclaim it.')
     );
     if (withoutBackup.length > 0) {
       console.log(

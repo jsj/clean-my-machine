@@ -48,7 +48,7 @@ export function debugError(context: string, error: unknown): void {
   if (!isDebugEnabled()) {
     return;
   }
-  console.error(`[mac-cleaner-cli:debug] ${context}: ${formatError(error)}`);
+  console.error(`[clean-my-machine:debug] ${context}: ${formatError(error)}`);
   if (error instanceof Error && error.stack) {
     console.error(error.stack);
   }

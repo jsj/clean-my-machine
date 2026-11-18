@@ -11,7 +11,7 @@ import pkg from '../package.json' with { type: 'json' };
 function parseCategoryId(value: string): CategoryId {
   if (!(value in CATEGORIES)) {
     throw new InvalidArgumentError(
-      `Unknown category "${value}". Run "mac-cleaner-cli categories" to list valid ids.`
+      `Unknown category "${value}". Run "clean-my-machine categories" to list valid ids.`
     );
   }
   return value as CategoryId;
@@ -87,7 +87,7 @@ setupGracefulShutdown();
 const program = new Command();
 
 program
-  .name('mac-cleaner-cli')
+  .name(pkg.name)
   .description('Open source CLI tool to clean your Mac')
   .version(pkg.version)
   .option('--root <path>', 'Repository root override (repeatable)', appendOption)
@@ -240,7 +240,7 @@ program
     if (options.show) {
       const exists = await configExists();
       if (!exists) {
-        console.log('No configuration file found. Run "mac-cleaner-cli config --init" to create one.');
+        console.log('No configuration file found. Run "clean-my-machine config --init" to create one.');
         return;
       }
       const config = await loadConfig();
@@ -269,7 +269,7 @@ program
         console.log(`  ${backup.date.toLocaleDateString()} - ${formatSize(backup.size)}`);
         console.log(`    ${backup.path}`);
       }
-      console.log('\nRestore with: mac-cleaner-cli backup --restore <path>');
+      console.log('\nRestore with: clean-my-machine backup --restore <path>');
       return;
     }
 

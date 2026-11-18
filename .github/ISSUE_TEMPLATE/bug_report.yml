@@ -11,7 +11,7 @@ body:
     id: version
     attributes:
       label: Mac Cleaner CLI version
-      description: Run `mac-cleaner-cli -V` or `npx mac-cleaner-cli -V`
+      description: Run `clean-my-machine -V` or `npx clean-my-machine -V`
       placeholder: "e.g. 1.3.1"
     validations:
       required: true
@@ -47,7 +47,7 @@ body:
     attributes:
       label: Steps to reproduce
       placeholder: |
-        1. Run `npx mac-cleaner-cli ...`
+        1. Run `npx clean-my-machine ...`
         2. Select ...
         3. ...
     validations:

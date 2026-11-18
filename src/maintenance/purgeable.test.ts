@@ -88,7 +88,7 @@ describe('freePurgeableSpace', () => {
     expect(result.success).toBe(false);
     expect(result.message).toBe('Failed to free purgeable space');
     expect(result.requiresSudo).toBe(true);
-    expect(result.error).toContain('sudo mac-cleaner-cli maintenance --purgeable');
+    expect(result.error).toContain('sudo clean-my-machine maintenance --purgeable');
   });
 
   it('should report that sudo is required on permission denied', async () => {

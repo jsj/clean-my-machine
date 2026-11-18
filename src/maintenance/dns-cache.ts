@@ -75,7 +75,7 @@ export async function flushDnsCache(): Promise<MaintenanceResult> {
       return {
         success: false,
         message: 'DNS cache flush requires administrator privileges',
-        error: 'Run with sudo: sudo mac-cleaner-cli maintenance --dns',
+        error: 'Run with sudo: sudo clean-my-machine maintenance --dns',
         requiresSudo: true,
       };
     }
@@ -103,7 +103,7 @@ export async function flushDnsCache(): Promise<MaintenanceResult> {
       success: false,
       message: 'Failed to flush DNS cache',
       error: errorMessage.includes('Operation not permitted') || errorMessage.includes('sudo')
-        ? 'Run with sudo: sudo mac-cleaner-cli maintenance --dns'
+        ? 'Run with sudo: sudo clean-my-machine maintenance --dns'
         : errorMessage,
       requiresSudo: errorMessage.includes('Operation not permitted'),
     };

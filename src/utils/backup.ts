@@ -144,7 +144,7 @@ export async function backupItem(item: CleanableItem, backupDir: string, beforeM
  *
  * `backedUpSize` is reported separately from "freed space" on purpose: moving a
  * file to another folder on the SAME disk does not free a single byte. The space
- * only appears after `mac-cleaner-cli backup --clean`. Calling it "freed" would
+ * only appears after `clean-my-machine backup --clean`. Calling it "freed" would
  * trade one untruth (a backup that never happened) for another.
  */
 export async function backupItems(
@@ -280,7 +280,7 @@ export async function restoreBackup(backupDir: string): Promise<{ success: numbe
     return {
       success: 0,
       failed: 1,
-      errors: ['Invalid backup directory: must be within the mac-cleaner-cli backup folder']
+      errors: ['Invalid backup directory: must be within the clean-my-machine backup folder']
     };
   }
 

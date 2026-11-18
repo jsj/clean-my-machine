@@ -1,7 +1,9 @@
-# mac-cleaner-cli
+# clean-my-machine
+
+A macOS cleanup CLI forked from [guhcostan/mac-cleaner-cli](https://github.com/guhcostan/mac-cleaner-cli). The desktop installer uses upstream releases.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/guhcostan/mac-cleaner-cli/main/assets/banner.png" alt="mac-cleaner-cli — free macOS disk space cleaner CLI tool" width="100%">
+  <img src="https://raw.githubusercontent.com/guhcostan/mac-cleaner-cli/main/assets/banner.png" alt="clean-my-machine — free macOS disk space cleaner CLI tool" width="100%">
 </p>
 
 <p align="center">
@@ -14,17 +16,17 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/mac-cleaner-cli"><img src="https://img.shields.io/npm/v/mac-cleaner-cli?color=cb3837&label=npm&logo=npm" alt="npm version"></a>
-  <a href="https://www.npmjs.com/package/mac-cleaner-cli"><img src="https://img.shields.io/npm/dm/mac-cleaner-cli?color=cb3837&logo=npm" alt="npm downloads"></a>
+  <a href="https://www.npmjs.com/package/clean-my-machine"><img src="https://img.shields.io/npm/v/clean-my-machine?color=cb3837&label=npm&logo=npm" alt="npm version"></a>
+  <a href="https://www.npmjs.com/package/clean-my-machine"><img src="https://img.shields.io/npm/dm/clean-my-machine?color=cb3837&logo=npm" alt="npm downloads"></a>
   <a href="https://github.com/guhcostan/mac-cleaner-cli/actions/workflows/ci.yml"><img src="https://github.com/guhcostan/mac-cleaner-cli/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
 </p>
 
 <p align="center">
-  <a href="https://nodejs.org"><img src="https://img.shields.io/node/v/mac-cleaner-cli" alt="Node.js Version"></a>
+  <a href="https://nodejs.org"><img src="https://img.shields.io/node/v/clean-my-machine" alt="Node.js Version"></a>
   <a href="https://www.apple.com/macos/"><img src="https://img.shields.io/badge/platform-macOS-000?logo=apple" alt="Platform: macOS"></a>
   <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-6.0-3178c6?logo=typescript&logoColor=white" alt="TypeScript"></a>
-  <a href="https://socket.dev/npm/package/mac-cleaner-cli"><img src="https://socket.dev/api/badge/npm/package/mac-cleaner-cli" alt="Socket Badge"></a>
+  <a href="https://socket.dev/npm/package/clean-my-machine"><img src="https://socket.dev/api/badge/npm/package/clean-my-machine" alt="Socket Badge"></a>
 </p>
 
 <p align="center">
@@ -45,7 +47,9 @@
 ## ⚡ Quick Start
 
 ```bash
-npx mac-cleaner-cli
+npx clean-my-machine
+# Or with Bun
+bunx clean-my-machine
 ```
 
 That's it. No installation needed. The CLI will:
@@ -82,7 +86,7 @@ Prefer not to open a terminal? **Mac Cleaner** is a menu bar app built on the sa
 Install or update it with one command:
 
 ```bash
-npx mac-cleaner-cli app install
+npx clean-my-machine app install
 # or, without Node.js:
 curl -fsSL https://guhcostan.github.io/mac-cleaner-cli/install.sh | bash
 ```
@@ -94,21 +98,21 @@ The `.dmg` files are also on [Releases](https://github.com/guhcostan/mac-cleaner
 ## 🎬 The CLI In Action
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/guhcostan/mac-cleaner-cli/main/assets/demo.gif" alt="mac-cleaner-cli demo" width="100%">
+  <img src="https://raw.githubusercontent.com/guhcostan/mac-cleaner-cli/main/assets/demo.gif" alt="clean-my-machine demo" width="100%">
 </p>
 
 ## ✨ Features
 
 | Feature | Description |
 |---------|-------------|
-| 🚀 **One Command** | Just run `npx mac-cleaner-cli` — no complex setup |
+| 🚀 **One Command** | Just run `npx clean-my-machine` — no complex setup |
 | 🎯 **Interactive** | Select exactly what you want to clean with checkboxes |
 | 📁 **File Explorer** | Drill down (`→`) into categories to select specific folders/files |
 | 🛡️ **Safe by Default** | Risky items hidden unless you use `--risky` |
 | 👀 **Dry Run** | Preview exactly what would be deleted with `--dry-run` |
 | ♻️ **Optional Backups** | Move items to a backup folder instead of deleting, restore later |
 | 🤖 **Scriptable** | `scan --json` and `clean --categories … --yes` for cron and CI |
-| 🖥️ **Menu Bar App** | Daily automatic cleaning, Deep Clean and history — `npx mac-cleaner-cli app install` |
+| 🖥️ **Menu Bar App** | Daily automatic cleaning, Deep Clean and history — `npx clean-my-machine app install` |
 | 🔍 **Smart Scanning** | Finds caches, logs, dev files, browser data, and more |
 | 📱 **App Uninstaller** | Remove apps completely with all associated files |
 | 🔧 **Maintenance** | Flush DNS cache, free purgeable space |
@@ -178,16 +182,16 @@ The `.dmg` files are also on [Releases](https://github.com/guhcostan/mac-cleaner
 
 ```bash
 # Interactive mode — scan, select, and clean
-npx mac-cleaner-cli
+npx clean-my-machine
 
 # Include risky categories
-npx mac-cleaner-cli --risky
+npx clean-my-machine --risky
 
 # Preview what would be deleted, without deleting anything
-npx mac-cleaner-cli --dry-run
+npx clean-my-machine --dry-run
 
 # Enable file picker for all categories
-npx mac-cleaner-cli --risky -f
+npx clean-my-machine --risky -f
 ```
 
 ### Folder-Level Selection (Interactive)
@@ -202,20 +206,20 @@ Supported categories: User Cache Files, Temporary Files, System Log Files, Devel
 
 ```bash
 # Scan only — see what can be cleaned without deleting anything
-npx mac-cleaner-cli scan
+npx clean-my-machine scan
 
 # Machine-readable output for scripts and integrations
-npx mac-cleaner-cli scan --json
-npx mac-cleaner-cli scan --json --verbose   # include item paths
+npx clean-my-machine scan --json
+npx clean-my-machine scan --json --verbose   # include item paths
 
 # Clean specific categories without prompts (great for cron/CI)
-npx mac-cleaner-cli clean --categories trash,browser-cache,homebrew --yes
+npx clean-my-machine clean --categories trash,browser-cache,homebrew --yes
 
 # Preview first
-npx mac-cleaner-cli clean --categories dev-cache --dry-run
+npx clean-my-machine clean --categories dev-cache --dry-run
 
 # Clean everything that is safe, no selection UI
-npx mac-cleaner-cli clean --all --yes
+npx clean-my-machine clean --all --yes
 ```
 
 Risky categories (downloads, iOS backups, etc) are always skipped unless you pass `--unsafe`.
@@ -224,17 +228,17 @@ Risky categories (downloads, iOS backups, etc) are always skipped unless you pas
 
 ```bash
 # Scan only a workspace; repeat --root for additional workspaces.
-npx mac-cleaner-cli scan --category rust-artifacts --root ~/dev --json --verbose
+npx clean-my-machine scan --category rust-artifacts --root ~/dev --json --verbose
 
 # Simulate validated Node build cleanup as one JSON document.
-npx mac-cleaner-cli clean --categories node-build-artifacts --unsafe --root ~/dev --dry-run --json
+npx clean-my-machine clean --categories node-build-artifacts --unsafe --root ~/dev --dry-run --json
 
 # Go requires explicit inclusion or an explicit Go category, plus risky enablement.
-npx mac-cleaner-cli clean --categories go-artifacts --unsafe --root ~/dev --dry-run --json
+npx clean-my-machine clean --categories go-artifacts --unsafe --root ~/dev --dry-run --json
 
 # Live review: selections start empty. A separate confirmation precedes cleanup.
-npx mac-cleaner-cli --live --root ~/dev
-npx mac-cleaner-cli scan --live --root ~/dev
+npx clean-my-machine --live --root ~/dev
+npx clean-my-machine scan --live --root ~/dev
 ```
 
 All repository rules require a readable, regular, non-symlink marker in the **immediate parent**. Node build names are `.next`, `.turbo`, `.parcel-cache`, `coverage`, `dist`, `build`, `out`, and `.cache`. Generic Node names (`coverage`, `dist`, `build`, `out`, `.cache`) and Go `bin`/`dist` additionally require a positive Git ignore match. They are omitted in non-Git projects. A marker or ignore match does not prove that every untracked file is disposable.
@@ -285,24 +289,24 @@ Live review requires a terminal and cannot be combined with JSON. Use `s`/`m`/`p
 Remove applications completely with all their preferences, caches, and support files:
 
 ```bash
-npx mac-cleaner-cli uninstall
+npx clean-my-machine uninstall
 ```
 
 ### Maintenance Tasks
 
 ```bash
 # Flush DNS cache (may require sudo)
-npx mac-cleaner-cli maintenance --dns
+npx clean-my-machine maintenance --dns
 
 # Free purgeable space
-npx mac-cleaner-cli maintenance --purgeable
+npx clean-my-machine maintenance --purgeable
 
 # Delete Time Machine local snapshots (requires sudo, asks for confirmation)
-sudo npx mac-cleaner-cli maintenance --timemachine
+sudo npx clean-my-machine maintenance --timemachine
 
 # Preview it first, or skip the prompt
-npx mac-cleaner-cli maintenance --timemachine --dry-run
-sudo npx mac-cleaner-cli maintenance --timemachine --yes
+npx clean-my-machine maintenance --timemachine --dry-run
+sudo npx clean-my-machine maintenance --timemachine --yes
 ```
 
 Local snapshots are taken automatically by Time Machine and can grow to hundreds of gigabytes.
@@ -313,19 +317,19 @@ disconnected — but macOS recreates them as needed once it is reconnected.
 
 ```bash
 # List all available categories
-npx mac-cleaner-cli categories
+npx clean-my-machine categories
 
 # Manage configuration
-npx mac-cleaner-cli config --init
-npx mac-cleaner-cli config --show
+npx clean-my-machine config --init
+npx clean-my-machine config --show
 
 # Manage backups
-npx mac-cleaner-cli backup --list
-npx mac-cleaner-cli backup --restore <dir>
-npx mac-cleaner-cli backup --clean
+npx clean-my-machine backup --list
+npx clean-my-machine backup --restore <dir>
+npx clean-my-machine backup --clean
 
 # Install or update the menu bar app (--no-open, --dir <folder>)
-npx mac-cleaner-cli app install
+npx clean-my-machine app install
 ```
 
 ### Backups (opt-in)
@@ -373,7 +377,7 @@ category can come back empty without an obvious reason. Set `MAC_CLEANER_DEBUG=1
 print every skipped path and the underlying error:
 
 ```bash
-MAC_CLEANER_DEBUG=1 npx mac-cleaner-cli scan
+MAC_CLEANER_DEBUG=1 npx clean-my-machine scan
 ```
 
 Exit codes: `0` on success, `1` when a category could not be scanned or an item could
@@ -384,8 +388,8 @@ not be deleted. `scan --json` also reports failures in an `errors` array.
 If you use this tool frequently:
 
 ```bash
-npm install -g mac-cleaner-cli
-mac-cleaner-cli
+npm install -g clean-my-machine
+clean-my-machine
 ```
 
 ## 🔒 Security
@@ -404,8 +408,8 @@ Found a vulnerability? Report it via [GitHub Security Advisories](https://github
 ## 🛠️ Development
 
 ```bash
-git clone https://github.com/guhcostan/mac-cleaner-cli.git
-cd mac-cleaner-cli
+git clone https://github.com/jsj/clean-my-machine.git
+cd clean-my-machine
 bun install
 bun run dev      # Run in dev mode
 bun run test     # Run tests

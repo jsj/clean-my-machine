@@ -3,7 +3,7 @@
   "configVersion": 0,
   "workspaces": {
     "": {
-      "name": "mac-cleaner-cli",
+      "name": "clean-my-machine",
       "dependencies": {
         "@inquirer/checkbox": "^5.0.2",
         "@inquirer/confirm": "^6.0.2",

@@ -62,7 +62,7 @@ describe('flushDnsCache', () => {
     expect(result).toEqual({
       success: false,
       message: 'DNS cache flush requires administrator privileges',
-      error: 'Run with sudo: sudo mac-cleaner-cli maintenance --dns',
+      error: 'Run with sudo: sudo clean-my-machine maintenance --dns',
       requiresSudo: true,
     });
     expect(spawnCalls).toEqual([{ command: '/usr/bin/sudo', args: ['-n', '/usr/bin/true'] }]);
@@ -99,7 +99,7 @@ describe('flushDnsCache', () => {
 
     expect(result.success).toBe(false);
     expect(result.message).toBe('Failed to flush DNS cache');
-    expect(result.error).toBe('Run with sudo: sudo mac-cleaner-cli maintenance --dns');
+    expect(result.error).toBe('Run with sudo: sudo clean-my-machine maintenance --dns');
     expect(result.requiresSudo).toBe(true);
   });
 

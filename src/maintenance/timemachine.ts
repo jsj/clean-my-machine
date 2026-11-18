@@ -163,7 +163,7 @@ export async function clearTimeMachineSnapshots(
     return {
       success: false,
       message: `Found ${dates.length} snapshot(s) but cannot delete without privileges`,
-      error: 'Run with sudo: sudo mac-cleaner-cli maintenance --timemachine',
+      error: 'Run with sudo: sudo clean-my-machine maintenance --timemachine',
       requiresSudo: true,
     };
   }

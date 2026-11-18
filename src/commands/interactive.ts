@@ -164,7 +164,7 @@ export async function interactiveCommand(options: InteractiveOptions = {}): Prom
     // the final report ("0 B freed") would look like a bug.
     console.log(
       chalk.yellow(
-        `  ⚠ Moving does NOT free disk space. Run "mac-cleaner-cli backup --clean" to reclaim it.`
+        `  ⚠ Moving does NOT free disk space. Run "clean-my-machine backup --clean" to reclaim it.`
       )
     );
     if (categoriesWithoutBackup.length > 0) {
@@ -304,8 +304,8 @@ function printCleanResults(summary: CleanSummary, dryRun = false): void {
       chalk.cyan(`   ${formatSize(summary.totalBackedUpSize ?? 0)} moved to backup (still on disk):`)
     );
     console.log(chalk.dim(`     ${summary.backupDir}`));
-    console.log(chalk.dim(`     restore: mac-cleaner-cli backup --restore "${summary.backupDir}"`));
-    console.log(chalk.dim(`     reclaim: mac-cleaner-cli backup --clean`));
+    console.log(chalk.dim(`     restore: clean-my-machine backup --restore "${summary.backupDir}"`));
+    console.log(chalk.dim(`     reclaim: clean-my-machine backup --clean`));
   }
 
   if (summary.totalErrors > 0) {

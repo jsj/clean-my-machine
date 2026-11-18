@@ -88,7 +88,7 @@ export async function freePurgeableSpace(): Promise<MaintenanceResult> {
         success: false,
         message: 'Failed to free purgeable space',
         error: needsSudo
-          ? 'Requires sudo. Run: sudo mac-cleaner-cli maintenance --purgeable'
+          ? 'Requires sudo. Run: sudo clean-my-machine maintenance --purgeable'
           : errorMessage,
         requiresSudo: needsSudo,
       };

@@ -66,7 +66,7 @@ export async function scanCommand(options: ScanCommandOptions): Promise<ScanSumm
 
 /**
  * Machine-readable scan output for scripting and integrations
- * (e.g. `mac-cleaner-cli scan --json | jq`). Item paths are included
+ * (e.g. `clean-my-machine scan --json | jq`). Item paths are included
  * only with --verbose to keep the default output small.
  */
 function toJsonSummary(summary: ScanSummary, verbose = false) {
