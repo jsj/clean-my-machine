@@ -1,10 +1,10 @@
 {
   "name": "clean-my-machine",
   "version": "1.4.0",
-  "description": "macOS CLI tool to free up disk space \u2014 removes caches, logs, Homebrew leftovers, Xcode DerivedData, and junk files",
+  "description": "macOS CLI tool to free up disk space — removes caches, logs, Homebrew leftovers, Xcode DerivedData, and junk files",
   "type": "module",
   "bin": {
-    "clean-my-machine": "./dist/index.mjs"
+    "clean-my-machine": "dist/index.mjs"
   },
   "main": "./dist/index.mjs",
   "types": "./dist/index.d.mts",
