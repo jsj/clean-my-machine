@@ -8,6 +8,11 @@ on:
   release:
     types: [published]
   workflow_dispatch:
+    inputs:
+      publish_tag:
+        description: 'Leave blank to test. To publish, run on a published release tag and enter that same tag.'
+        type: string
+        required: false
 
 permissions:
   contents: read
@@ -88,7 +93,11 @@ jobs:
   publish:
     needs: test
     runs-on: macos-latest
-    if: github.event_name == 'release'
+    if: >-
+      github.event_name == 'release' ||
+      (github.event_name == 'workflow_dispatch' &&
+      startsWith(github.ref, 'refs/tags/v') &&
+      inputs.publish_tag == github.ref_name)
 
     permissions:
       contents: read
@@ -121,6 +130,16 @@ jobs:
 
       - name: Build
         run: bun run build
+
+      - name: Verify release tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          version=$(node -p 'require("./package.json").version')
+          test "$RELEASE_TAG" = "v$version"
+          gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --json isDraft \
+            --jq '.isDraft' | grep -qx false
 
       - name: Publish to npm
         env:
