@@ -332,11 +332,20 @@ npx clean-my-machine backup --clean
 npx clean-my-machine app install
 ```
 
+### Find what is using disk space
+
+Run `bunx clean-my-machine` and choose **Map largest folders**. Pick your home
+folder, internal data volume, or a mounted external volume. Select a folder to
+see its largest subfolders, ranked by allocated size. The map is read-only.
+
+Choose **Scan for cleanup candidates** from the same menu to review removable
+files. After a confirmed cleanup, the CLI reports the observed change in free
+space on the measured volumes.
+
 ### Xcode simulator storage
 
-When simulator devices are present, running `clean-my-machine` in a terminal
-offers to review them before the regular scan. You can preview one device and
-choose which categories to clear.
+From the main menu, choose **Review Xcode simulator storage** to preview one
+device and choose which categories to clear.
 
 List simulator devices, shared runtime images, free space on the home volume, and
 host swap usage. Swap is diagnostic and is excluded from cleanup estimates.

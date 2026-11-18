@@ -1,11 +1,12 @@
 import checkbox from '@inquirer/checkbox';
 import confirm from '@inquirer/confirm';
 import { execFile } from 'node:child_process';
-import { lstat, readdir, realpath, rmdir, statfs, unlink } from 'node:fs/promises';
+import { lstat, readdir, realpath, rmdir, unlink } from 'node:fs/promises';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
 import { promisify } from 'node:util';
 import { formatSize } from '../utils/size.js';
+import { availableBytes } from '../utils/volumes.js';
 
 const run = promisify(execFile);
 const simctl = async (...args: string[]) =>
@@ -39,11 +40,6 @@ async function devices() {
   const result = JSON.parse(await simctl('list', 'devices', '-j')) as { devices: Record<string, Device[]> };
   return Object.entries(result.devices).flatMap(([runtime, entries]) =>
     entries.map(device => ({ ...device, runtime })));
-}
-
-async function availableBytes(path: string) {
-  const volume = await statfs(path);
-  return volume.bavail * volume.bsize;
 }
 
 async function hostSwap() {
@@ -104,10 +100,10 @@ export async function xcodeInventory(json: boolean, knownDevices?: Awaited<Retur
 
 export async function reviewSimulatorsFromDefaultCommand() {
   const deviceList = await devices().catch(() => []);
-  if (!deviceList.length || !await confirm({
-    message: 'Review Xcode simulator storage before scanning other files?',
-    default: false,
-  })) return;
+  if (!deviceList.length) {
+    console.log('No Xcode simulators found.');
+    return;
+  }
 
   await xcodeInventory(false, deviceList);
   const [udid] = await checkbox({

@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+import select from '@inquirer/select';
+import { browseLargestFolders } from './commands/storage.js';
 import { Command, InvalidArgumentError, Option } from 'commander';
 import { ExitPromptError } from '@inquirer/core';
 import { appInstallCommand, cleanCommand, interactiveCommand, listCategories, maintenanceCommand, scanCommand, uninstallCommand } from './commands/index.js';
@@ -101,21 +103,40 @@ program
   .option('-d, --dry-run', 'Show what would be deleted without deleting anything')
   .option('--no-progress', 'Disable progress bar')
   .action(action(async (options) => {
-    if (process.argv.length === 2 && process.stdin.isTTY && process.stdout.isTTY) {
-      await reviewSimulatorsFromDefaultCommand();
+    const scanForCleanup = async () => {
+      const config = await loadConfig();
+      await interactiveCommand({
+        live: options.live ?? program.opts().live,
+        roots: [...(program.opts().root ?? []), ...(options.root ?? [])],
+        includeEcosystems: [...(program.opts().include ?? []), ...(options.include ?? [])],
+        excludePaths: [...(program.opts().exclude ?? []), ...(options.exclude ?? [])],
+        includeRisky: options.risky,
+        filePicker: options.filePicker ?? config.filePicker,
+        absolutePaths: options.absolutePaths,
+        dryRun: options.dryRun ?? program.opts().dryRun,
+        noProgress: !options.progress,
+      });
+    };
+    if (process.argv.length !== 2 || !process.stdin.isTTY || !process.stdout.isTTY) {
+      await scanForCleanup();
+      return;
     }
-    const config = await loadConfig();
-    await interactiveCommand({
-      live: options.live ?? program.opts().live,
-      roots: [...(program.opts().root ?? []), ...(options.root ?? [])],
-      includeEcosystems: [...(program.opts().include ?? []), ...(options.include ?? [])],
-      excludePaths: [...(program.opts().exclude ?? []), ...(options.exclude ?? [])],
-      includeRisky: options.risky,
-      filePicker: options.filePicker ?? config.filePicker,
-      absolutePaths: options.absolutePaths,
-      dryRun: options.dryRun ?? program.opts().dryRun,
-      noProgress: !options.progress,
-    });
+
+    while (true) {
+      const task = await select({
+        message: 'Clean My Machine',
+        choices: [
+          { name: 'Scan for cleanup candidates', value: 'clean' },
+          { name: 'Map largest folders', value: 'storage' },
+          { name: 'Review Xcode simulator storage', value: 'xcode' },
+          { name: 'Exit', value: 'exit' },
+        ],
+      });
+      if (task === 'exit') return;
+      if (task === 'clean') await scanForCleanup();
+      else if (task === 'storage') await browseLargestFolders();
+      else await reviewSimulatorsFromDefaultCommand();
+    }
   }));
 
 program
