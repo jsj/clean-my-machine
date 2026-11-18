@@ -1,6 +1,7 @@
 import { readdir, stat, statfs } from 'node:fs/promises';
 import { homedir } from 'node:os';
 import { basename, dirname, join } from 'node:path';
+import { formatSize } from './size.js';
 
 const dataVolume = '/System/Volumes/Data';
 
@@ -25,9 +26,9 @@ export async function storageRoots() {
   ];
 }
 
-export async function measureCleanupVolumes(paths: string[]) {
+export async function measureCleanupVolumes(paths: string[], extraDirectories: string[] = []) {
   const roots = await storageRoots().catch(() => []);
-  const parents = await Promise.all([...new Set(paths.filter(path => path.startsWith('/')).map(path => dirname(path)))].map(async path => {
+  const parents = await Promise.all([...new Set([...paths.filter(path => path.startsWith('/')).map(path => dirname(path)), ...extraDirectories])].map(async path => {
     const info = await stat(path).catch(() => undefined);
     return info ? { dev: info.dev, label: basename(path) || path, path } : undefined;
   }));
@@ -40,4 +41,14 @@ export async function measureCleanupVolumes(paths: string[]) {
     const bytes = await availableBytes(volume.path).catch(() => undefined);
     return bytes === undefined ? undefined : { ...volume, bytes };
   }))).filter(volume => volume !== undefined);
+}
+
+export async function printFreeSpaceChanges(before: Awaited<ReturnType<typeof measureCleanupVolumes>>) {
+  for (const volume of before) {
+    const after = await availableBytes(volume.path).catch(() => undefined);
+    if (after === undefined) continue;
+    const change = after - volume.bytes;
+    const delta = change === 0 ? '0 B' : `${change > 0 ? '+' : '-'}${formatSize(Math.abs(change))}`;
+    console.log(`Observed free-space change on ${volume.label}: ${delta} (${formatSize(after)} available)`);
+  }
 }

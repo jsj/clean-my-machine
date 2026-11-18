@@ -29,7 +29,7 @@ const EXPECTED_CACHE_PREFIXES = [
 /**
  * Finds the Homebrew binary in known safe locations.
  */
-async function findBrewBinary(): Promise<string | null> {
+export async function findBrewBinary(): Promise<string | null> {
   for (const path of BREW_PATHS) {
     try {
       await access(path, constants.X_OK);

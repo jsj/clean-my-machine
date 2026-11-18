@@ -1,4 +1,4 @@
-import { availableBytes, measureCleanupVolumes } from '../utils/volumes.js';
+import { measureCleanupVolumes, printFreeSpaceChanges } from '../utils/volumes.js';
 import { liveReviewPrompt } from '../pickers/live-review.js';
 import type { LiveReviewResult } from '../pickers/live-review.js';
 import chalk from 'chalk';
@@ -217,13 +217,7 @@ export async function interactiveCommand(options: InteractiveOptions = {}): Prom
 
   // Step 7: Show results
   printCleanResults(cleanResults, options.dryRun);
-  for (const volume of volumesBefore) {
-    const after = await availableBytes(volume.path).catch(() => undefined);
-    if (after === undefined) continue;
-    const change = after - volume.bytes;
-    const delta = change === 0 ? '0 B' : `${change > 0 ? '+' : '-'}${formatSize(Math.abs(change))}`;
-    console.log(`Observed free-space change on ${volume.label}: ${delta} (${formatSize(after)} available)`);
-  }
+  await printFreeSpaceChanges(volumesBefore);
 
   if (cleanResults.totalErrors > 0) {
     process.exitCode = 1;

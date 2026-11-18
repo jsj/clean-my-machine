@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import select from '@inquirer/select';
+import { packageMaintenance } from './commands/packages.js';
 import { browseLargestFolders } from './commands/storage.js';
 import { Command, InvalidArgumentError, Option } from 'commander';
 import { ExitPromptError } from '@inquirer/core';
@@ -129,13 +130,15 @@ program
           { name: 'Scan for cleanup candidates', value: 'clean' },
           { name: 'Map largest folders', value: 'storage' },
           { name: 'Review Xcode simulator storage', value: 'xcode' },
+          { name: 'Maintain Homebrew and npm packages', value: 'packages' },
           { name: 'Exit', value: 'exit' },
         ],
       });
       if (task === 'exit') return;
       if (task === 'clean') await scanForCleanup();
       else if (task === 'storage') await browseLargestFolders();
-      else await reviewSimulatorsFromDefaultCommand();
+      else if (task === 'xcode') await reviewSimulatorsFromDefaultCommand();
+      else await packageMaintenance();
     }
   }));
 
