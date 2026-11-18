@@ -1,4 +1,4 @@
-import { expect, it } from 'vitest';
+import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import { PassThrough } from 'stream';
 import { liveReviewPrompt } from './live-review.js';
 import { CATEGORIES, type ScannerOptions, type ScanSummary } from '../types.js';
@@ -6,6 +6,10 @@ const tick = () => new Promise((resolve) => setTimeout(resolve, 5));
 const category = CATEGORIES['rust-artifacts'];
 const items = Array.from({ length: 12 }, (_, i) => ({ path: `/fixture/${i}/target`, name: String(i), size: i + 1, isDirectory: true }));
 const summary = { results: [{ category, items, totalSize: 78 }], totalSize: 78, totalItems: 12 };
+// The streams emulate an interactive terminal, independently of the test runner's TERM.
+beforeEach(() => vi.stubEnv('TERM', 'xterm'));
+afterEach(() => vi.unstubAllEnvs());
+
 function terminal() {
   const input = new PassThrough(); const output = new PassThrough(); let text = '';
   output.on('data', (data: Buffer) => { text += data.toString(); });

@@ -342,13 +342,15 @@ Choose **Scan for cleanup candidates** from the same menu to review removable
 files. After a confirmed cleanup, the CLI reports the observed change in free
 space on the measured volumes.
 
-### Maintain Homebrew and npm packages
+### Maintain Homebrew, npm, and Bun packages
 
-Choose **Maintain Homebrew and npm packages** in the main menu. Select Homebrew
-upgrade, Homebrew cleanup, or global npm updates, then confirm the selection.
+Choose **Maintain Homebrew, npm, and Bun packages** in the main menu. Select Homebrew
+upgrade, Homebrew cleanup, global npm updates, or global Bun updates, then
+confirm the selection.
 If you select both Homebrew tasks, cleanup follows a successful upgrade.
 The npm task uses the global prefix of the active npm installation and leaves
-project dependencies alone. Updates can consume disk space. The CLI shows the
+project dependencies alone. The Bun task updates packages installed with
+`bun add --global`. Updates can consume disk space. The CLI shows the
 observed change after the selected tasks finish.
 
 ### Xcode simulator storage

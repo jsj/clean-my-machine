@@ -55,9 +55,10 @@ function runPackageTask(task: PackageTask) {
 }
 
 export async function packageMaintenance() {
-  const [brew, npm] = await Promise.all([
+  const [brew, npm, bun] = await Promise.all([
     findOnPath('brew').then(path => path ?? findBrewBinary()),
     findOnPath('npm'),
+    findOnPath('bun'),
   ]);
   const tasks: Record<string, PackageTask> = {};
   if (brew) {
@@ -77,8 +78,14 @@ export async function packageMaintenance() {
       executable: npm, args: ['update', '--global'],
     };
   }
+  if (bun) {
+    tasks.bun = {
+      label: 'Update global Bun packages (bun update --global)',
+      executable: bun, args: ['update', '--global'],
+    };
+  }
   if (!Object.keys(tasks).length) {
-    console.log('Homebrew and npm were not found.');
+    console.log('Homebrew, npm, and Bun were not found.');
     return;
   }
 
@@ -95,6 +102,7 @@ export async function packageMaintenance() {
     brew && selected.some(id => id === 'upgrade' || id === 'cleanup') ? packageLocation(brew, ['--prefix']) : undefined,
     brew && selected.includes('cleanup') ? packageLocation(brew, ['--cache']) : undefined,
     npm && selected.includes('npm') ? packageLocation(npm, ['prefix', '--global']) : undefined,
+    bun && selected.includes('bun') ? packageLocation(bun, ['pm', 'bin', '--global']) : undefined,
   ]);
   const before = await measureCleanupVolumes([], locations.filter(path => path !== undefined));
 

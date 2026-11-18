@@ -130,7 +130,7 @@ program
           { name: 'Scan for cleanup candidates', value: 'clean' },
           { name: 'Map largest folders', value: 'storage' },
           { name: 'Review Xcode simulator storage', value: 'xcode' },
-          { name: 'Maintain Homebrew and npm packages', value: 'packages' },
+          { name: 'Maintain Homebrew, npm, and Bun packages', value: 'packages' },
           { name: 'Exit', value: 'exit' },
         ],
       });
