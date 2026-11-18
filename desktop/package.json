@@ -1,10 +1,10 @@
 {
-  "name": "mac-cleaner-desktop",
-  "productName": "Mac Cleaner",
+  "name": "clean-my-machine-desktop",
+  "productName": "Clean My Machine",
   "version": "1.4.0",
   "private": true,
   "type": "module",
-  "description": "Menu bar app that keeps your Mac clean automatically, powered by mac-cleaner-cli",
+  "description": "Menu bar app that keeps your Mac clean automatically, powered by clean-my-machine",
   "author": "guhcostan",
   "license": "MIT",
   "main": "dist/main.cjs",

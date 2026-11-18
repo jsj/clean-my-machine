@@ -1,10 +1,6 @@
-# clean-my-machine
+# Clean My Machine
 
-A macOS cleanup CLI forked from [guhcostan/mac-cleaner-cli](https://github.com/guhcostan/mac-cleaner-cli). The desktop installer uses upstream releases.
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/guhcostan/mac-cleaner-cli/main/assets/banner.png" alt="clean-my-machine — free macOS disk space cleaner CLI tool" width="100%">
-</p>
+A macOS cleanup CLI and menu bar app based on [mac-cleaner-cli by Gustavo Costa](https://github.com/guhcostan/mac-cleaner-cli).
 
 <p align="center">
   Free up disk space on macOS with a single command. Removes caches, logs, Homebrew leftovers, Xcode DerivedData, and junk files — all from your terminal.<br>
@@ -12,13 +8,9 @@ A macOS cleanup CLI forked from [guhcostan/mac-cleaner-cli](https://github.com/g
 </p>
 
 <p align="center">
-  <strong><a href="https://guhcostan.github.io/mac-cleaner-cli/">🌐 Website</a></strong>
-</p>
-
-<p align="center">
   <a href="https://www.npmjs.com/package/clean-my-machine"><img src="https://img.shields.io/npm/v/clean-my-machine?color=cb3837&label=npm&logo=npm" alt="npm version"></a>
   <a href="https://www.npmjs.com/package/clean-my-machine"><img src="https://img.shields.io/npm/dm/clean-my-machine?color=cb3837&logo=npm" alt="npm downloads"></a>
-  <a href="https://github.com/guhcostan/mac-cleaner-cli/actions/workflows/ci.yml"><img src="https://github.com/guhcostan/mac-cleaner-cli/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/jsj/clean-my-machine/actions/workflows/ci.yml"><img src="https://github.com/jsj/clean-my-machine/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
 </p>
 
@@ -30,16 +22,12 @@ A macOS cleanup CLI forked from [guhcostan/mac-cleaner-cli](https://github.com/g
 </p>
 
 <p align="center">
-  <a href="https://github.com/guhcostan/mac-cleaner-cli/stargazers"><img src="https://img.shields.io/github/stars/guhcostan/mac-cleaner-cli?style=social" alt="GitHub Stars"></a>
-  <a href="https://github.com/guhcostan/mac-cleaner-cli/network/members"><img src="https://img.shields.io/github/forks/guhcostan/mac-cleaner-cli?style=social" alt="GitHub Forks"></a>
+  <a href="https://github.com/jsj/clean-my-machine/stargazers"><img src="https://img.shields.io/github/stars/jsj/clean-my-machine?style=social" alt="GitHub Stars"></a>
+  <a href="https://github.com/jsj/clean-my-machine/network/members"><img src="https://img.shields.io/github/forks/jsj/clean-my-machine?style=social" alt="GitHub Forks"></a>
 </p>
 
 <p align="center">
-  <a href="https://ko-fi.com/guhcostan"><img src="https://img.shields.io/badge/Ko--fi-Support_this_project-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white" alt="Support on Ko-fi"></a>
-</p>
-
-<p align="center">
-  <strong>🪟 Also available for Windows:</strong> <a href="https://github.com/guhcostan/windows-cleaner-cli">windows-cleaner-cli</a>
+  <a href="https://ko-fi.com/guhcostan"><img src="https://img.shields.io/badge/Ko--fi-Support_upstream_author-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white" alt="Support on Ko-fi"></a>
 </p>
 
 ---
@@ -61,12 +49,12 @@ That's it. No installation needed. The CLI will:
 
 ## 🖥️ Desktop App (menu bar) — new
 
-Prefer not to open a terminal? **Mac Cleaner** is a menu bar app built on the same scanners as the CLI.
+Prefer not to open a terminal? **Clean My Machine** is a menu bar app built on the same scanners as the CLI.
 
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/screenshots/app-dark.png">
-    <img src="assets/screenshots/app-light.png" alt="Mac Cleaner menu bar app: space freed, disk usage, last run and next automatic clean" width="620">
+    <img src="assets/screenshots/app-light.png" alt="Clean My Machine menu bar app: space freed, disk usage, last run and next automatic clean" width="620">
   </picture>
 </p>
 
@@ -83,23 +71,7 @@ Prefer not to open a terminal? **Mac Cleaner** is a menu bar app built on the sa
   </picture>
 </p>
 
-Install or update it with one command:
-
-```bash
-npx clean-my-machine app install
-# or, without Node.js:
-curl -fsSL https://guhcostan.github.io/mac-cleaner-cli/install.sh | bash
-```
-
-Both pick the build for your Mac (Apple Silicon or Intel), download the latest release, verify its SHA-256 checksum and install it into `/Applications`. Then give it **Full Disk Access** (System Settings → Privacy & Security) so it can see every cache.
-
-The `.dmg` files are also on [Releases](https://github.com/guhcostan/mac-cleaner-cli/releases), but the app isn't signed with an Apple Developer ID yet, so a `.dmg` downloaded with a browser shows a Gatekeeper warning first ([why, and how to open it](desktop/README.md#install)). See [`desktop/`](desktop/README.md) for details and how to build it yourself.
-
-## 🎬 The CLI In Action
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/guhcostan/mac-cleaner-cli/main/assets/demo.gif" alt="clean-my-machine demo" width="100%">
-</p>
+See the [desktop build and install instructions](desktop/README.md#install). The desktop installer requires a GitHub release with an app build for your Mac.
 
 ## ✨ Features
 
@@ -121,7 +93,7 @@ The `.dmg` files are also on [Releases](https://github.com/guhcostan/mac-cleaner
 
 ## 💰 vs. Paid Alternatives
 
-| | Mac Cleaner CLI | CleanMyMac X | DaisyDisk |
+| | Clean My Machine | CleanMyMac X | DaisyDisk |
 |---|---|---|---|
 | **Price** | **Free** | $39.95/year | $9.99 one-time |
 | **Open Source** | ✅ | ❌ | ❌ |
@@ -247,7 +219,7 @@ Git's current index and HEAD both protect tracked content, including staged addi
 
 Default roots are `~/Projects`, `~/Developer`, `~/Code`, `~/dev`, `~/workspace`, and `~/repos`. `extraPaths.projects` adds roots for all repository categories; legacy `extraPaths.nodeModules` adds roots only for `node-modules`. A nonempty repeatable `--root` list replaces these roots for that command, without changing other scanners. Roots are canonicalized and restricted to directories below HOME, `/Users`, or `/Volumes`; broad HOME/system roots are rejected. Empty extra-path arrays add nothing.
 
-Add these settings to the existing `~/.maccleanerrc` (or `~/.config/mac-cleaner-cli/config.json`):
+Add these settings to the existing `~/.maccleanerrc` (or `~/.config/clean-my-machine/config.json`):
 
 ```json
 {
@@ -454,7 +426,7 @@ clean-my-machine
 | ✅ **CI/CD** | Every release tested with TypeScript, ESLint, and automated tests |
 | ✅ **Socket.dev** | Dependencies monitored for supply chain attacks |
 
-Found a vulnerability? Report it via [GitHub Security Advisories](https://github.com/guhcostan/mac-cleaner-cli/security/advisories/new).
+Found a vulnerability? Report it via [GitHub Security Advisories](https://github.com/jsj/clean-my-machine/security/advisories/new).
 
 ## 🛠️ Development
 
@@ -492,28 +464,27 @@ Quick steps:
 4. Run `bun run lint && bun run test`
 5. Open a Pull Request
 
-Looking for a place to start? Check issues labeled [`good first issue`](https://github.com/guhcostan/mac-cleaner-cli/labels/good%20first%20issue) or [`help wanted`](https://github.com/guhcostan/mac-cleaner-cli/labels/help%20wanted).
+Looking for a place to start? Check issues labeled [`good first issue`](https://github.com/jsj/clean-my-machine/labels/good%20first%20issue) or [`help wanted`](https://github.com/jsj/clean-my-machine/labels/help%20wanted).
 
 ## 💬 Community
 
-- [GitHub Discussions](https://github.com/guhcostan/mac-cleaner-cli/discussions) — questions, ideas, show & tell
-- [Issues](https://github.com/guhcostan/mac-cleaner-cli/issues) — bug reports and feature requests
+- [GitHub Discussions](https://github.com/jsj/clean-my-machine/discussions) — questions, ideas, show & tell
+- [Issues](https://github.com/jsj/clean-my-machine/issues) — bug reports and feature requests
 
 ## ⭐ Star History
 
 If this tool saved you disk space, a star goes a long way! It helps more Mac users discover this free alternative to paid cleaners.
 
-[![Star History Chart](https://api.star-history.com/svg?repos=guhcostan/mac-cleaner-cli&type=Date)](https://star-history.com/#guhcostan/mac-cleaner-cli&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=jsj/clean-my-machine&type=Date)](https://star-history.com/#jsj/clean-my-machine&Date)
 
 ## 💚 Support
 
-If this tool saved you time or disk space, consider supporting the project!
+If this tool saved you time or disk space, consider supporting the original upstream author, Gustavo Costa!
 
 <p align="center">
   <a href="https://ko-fi.com/guhcostan"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Support on Ko-fi"></a>
 </p>
 
-Your support helps maintain and improve this tool. Thank you! 🙏
 
 ## 📄 License
 

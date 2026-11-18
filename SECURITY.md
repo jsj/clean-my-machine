@@ -11,7 +11,7 @@
 
 **Please do not report security vulnerabilities through public GitHub issues.**
 
-Report vulnerabilities via [GitHub Security Advisories](https://github.com/guhcostan/mac-cleaner-cli/security/advisories/new).
+Report vulnerabilities via [GitHub Security Advisories](https://github.com/jsj/clean-my-machine/security/advisories/new).
 
 Include:
 - Description of the vulnerability
@@ -23,14 +23,14 @@ You can expect a response within **72 hours**. We'll work with you to understand
 
 ## Security Model
 
-Mac Cleaner CLI is designed with security in mind:
+Clean My Machine is designed with security in mind:
 
 - **100% offline** — no network requests, no telemetry, no analytics
 - **No root required** — all operations run as the current user
 - **Read before delete** — items are scanned and listed before any deletion
 - **Open source** — all code is publicly auditable
-- **Minimal dependencies** — only 5 runtime dependencies, all from trusted maintainers monitored via [Socket.dev](https://socket.dev/npm/package/mac-cleaner-cli)
+- **Minimal dependencies** — only 5 runtime dependencies, all from trusted maintainers monitored via [Socket.dev](https://socket.dev/npm/package/clean-my-machine)
 
 ## Scope
 
-This policy covers the `mac-cleaner-cli` npm package and the source code in this repository.
+This policy covers the `clean-my-machine` npm package and the source code in this repository.

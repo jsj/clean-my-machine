@@ -28,7 +28,7 @@ interface InteractiveOptions extends RepoRequestOptions {
 export async function interactiveCommand(options: InteractiveOptions = {}): Promise<CleanSummary | null> {
   if (options.live && !process.stdin.isTTY) throw new Error('--live requires an interactive terminal');
   console.log();
-  console.log(chalk.bold.cyan('🧹 Mac Cleaner CLI'));
+  console.log(chalk.bold.cyan('🧹 Clean My Machine'));
   console.log(chalk.dim('─'.repeat(50)));
   console.log();
 

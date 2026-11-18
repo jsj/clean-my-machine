@@ -1,4 +1,4 @@
-# Contributing to Mac Cleaner CLI
+# Contributing to Clean My Machine
 
 Thank you for your interest in contributing! This project is community-driven and every contribution matters — from fixing a typo to adding a new scanner.
 
@@ -34,8 +34,8 @@ This project follows the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.
 
 ```bash
 # Clone your fork
-git clone https://github.com/<your-username>/mac-cleaner-cli.git
-cd mac-cleaner-cli
+git clone https://github.com/<your-username>/clean-my-machine.git
+cd clean-my-machine
 
 # Install dependencies
 bun install
@@ -81,7 +81,7 @@ src/
 
 Use the [Bug Report](.github/ISSUE_TEMPLATE/bug_report.yml) template. Include:
 - macOS version
-- Tool version (`mac-cleaner-cli -V`)
+- Tool version (`clean-my-machine -V`)
 - Steps to reproduce
 - Expected vs actual behavior
 

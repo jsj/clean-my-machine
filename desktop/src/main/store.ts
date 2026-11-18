@@ -24,7 +24,7 @@ async function readJson(path: string): Promise<unknown> {
 
 /**
  * Settings and run history, persisted as a JSON file in the app's
- * user data directory (~/Library/Application Support/Mac Cleaner).
+ * user data directory (~/Library/Application Support/Clean My Machine).
  */
 export class Store {
   private data: PersistedData;

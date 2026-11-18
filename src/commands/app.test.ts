@@ -13,22 +13,22 @@ import {
   type Release,
 } from './app.js';
 
-const ZIP_BYTES = Buffer.from('pretend this is a zip with Mac Cleaner.app inside');
+const ZIP_BYTES = Buffer.from('pretend this is a zip with Clean My Machine.app inside');
 const ZIP_SHA = createHash('sha256').update(ZIP_BYTES).digest('hex');
 
 function release(overrides: Partial<Release> = {}): Release {
   return {
     tag_name: 'v1.4.0',
     assets: [
-      { name: 'Mac-Cleaner-1.4.0-arm64.dmg', browser_download_url: 'https://github.com/x/arm64.dmg', digest: null },
+      { name: 'Clean-My-Machine-1.4.0-arm64.dmg', browser_download_url: 'https://github.com/x/arm64.dmg', digest: null },
       {
-        name: 'Mac-Cleaner-1.4.0-arm64-mac.zip',
-        browser_download_url: 'https://github.com/guhcostan/mac-cleaner-cli/releases/download/v1.4.0/Mac-Cleaner-1.4.0-arm64-mac.zip',
+        name: 'Clean-My-Machine-1.4.0-arm64-mac.zip',
+        browser_download_url: 'https://github.com/jsj/clean-my-machine/releases/download/v1.4.0/Clean-My-Machine-1.4.0-arm64-mac.zip',
         digest: `sha256:${ZIP_SHA}`,
       },
       {
-        name: 'Mac-Cleaner-1.4.0-x64-mac.zip',
-        browser_download_url: 'https://github.com/guhcostan/mac-cleaner-cli/releases/download/v1.4.0/Mac-Cleaner-1.4.0-x64-mac.zip',
+        name: 'Clean-My-Machine-1.4.0-x64-mac.zip',
+        browser_download_url: 'https://github.com/jsj/clean-my-machine/releases/download/v1.4.0/Clean-My-Machine-1.4.0-x64-mac.zip',
         digest: `sha256:${ZIP_SHA}`,
       },
     ],
@@ -38,25 +38,25 @@ function release(overrides: Partial<Release> = {}): Release {
 
 describe('pickAsset', () => {
   it('picks the zip for the requested architecture', () => {
-    expect(pickAsset(release(), 'arm64').name).toBe('Mac-Cleaner-1.4.0-arm64-mac.zip');
-    expect(pickAsset(release(), 'x64').name).toBe('Mac-Cleaner-1.4.0-x64-mac.zip');
+    expect(pickAsset(release(), 'arm64').name).toBe('Clean-My-Machine-1.4.0-arm64-mac.zip');
+    expect(pickAsset(release(), 'x64').name).toBe('Clean-My-Machine-1.4.0-x64-mac.zip');
   });
 
   it('fails when the architecture is missing', () => {
     const r = release({ assets: release().assets.filter((a) => !a.name.includes('x64')) });
-    expect(() => pickAsset(r, 'x64')).toThrow('no Mac Cleaner app for x64');
+    expect(() => pickAsset(r, 'x64')).toThrow('no Clean My Machine app for x64');
   });
 
   it('refuses assets served from somewhere other than github.com', () => {
     const r = release({
-      assets: [{ name: 'Mac-Cleaner-1.4.0-arm64-mac.zip', browser_download_url: 'https://evil.example/app.zip', digest: null }],
+      assets: [{ name: 'Clean-My-Machine-1.4.0-arm64-mac.zip', browser_download_url: 'https://evil.example/app.zip', digest: null }],
     });
     expect(() => pickAsset(r, 'arm64')).toThrow('Unexpected download URL');
   });
 
   it('ignores names that only look similar', () => {
     const r = release({
-      assets: [{ name: 'Mac-Cleaner-../../x-arm64-mac.zip', browser_download_url: 'https://github.com/x', digest: null }],
+      assets: [{ name: 'Clean-My-Machine-../../x-arm64-mac.zip', browser_download_url: 'https://github.com/x', digest: null }],
     });
     expect(() => pickAsset(r, 'arm64')).toThrow();
   });

@@ -339,10 +339,10 @@ async function printCleanResults(summary: CleanSummary): Promise<void> {
 async function showDonationMessage(): Promise<void> {
   console.log(chalk.dim('─'.repeat(50)));
   console.log();
-  console.log(chalk.bold('💚 Enjoying Mac Cleaner CLI?'));
+  console.log(chalk.bold('💚 Enjoying Clean My Machine?'));
   console.log();
   console.log(chalk.dim('  If this tool saved you time or disk space,'));
-  console.log(chalk.dim('  consider supporting the project:'));
+  console.log(chalk.dim('  consider supporting the upstream author:'));
   console.log();
   console.log(`  ${chalk.cyan.underline(DONATION_URL)}`);
   console.log();
@@ -356,6 +356,6 @@ async function showDonationMessage(): Promise<void> {
     openUrl(DONATION_URL);
     console.log(chalk.green('\n✓ Opened in your browser. Thank you for your support!\n'));
   } else {
-    console.log(chalk.dim('\nThank you for using Mac Cleaner CLI!\n'));
+    console.log(chalk.dim('\nThank you for using Clean My Machine!\n'));
   }
 }

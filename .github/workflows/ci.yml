@@ -75,8 +75,8 @@ jobs:
           MAC_CLEANER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           check_app() {
-            app="$1/Mac Cleaner.app"
-            test -x "$app/Contents/MacOS/Mac Cleaner"
+            app="$1/Clean My Machine.app"
+            test -x "$app/Contents/MacOS/Clean My Machine"
             codesign --verify --deep --strict "$app"
             if xattr -p com.apple.quarantine "$app" 2>/dev/null; then
               echo "quarantine attribute is set on $app"; exit 1

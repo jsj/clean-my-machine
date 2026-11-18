@@ -162,16 +162,16 @@ function updateTray(state: AppState): void {
   tray.setTitle(title);
 
   const tooltip = busy
-    ? 'Mac Cleaner — cleaning…'
+    ? 'Clean My Machine — cleaning…'
     : last
-      ? `Mac Cleaner — last run freed ${formatSize(last.freedSpace)}`
-      : 'Mac Cleaner';
+      ? `Clean My Machine — last run freed ${formatSize(last.freedSpace)}`
+      : 'Clean My Machine';
   tray.setToolTip(tooltip);
 }
 
 function buildContextMenu(): Menu {
   return Menu.buildFromTemplate([
-    { label: 'Open Mac Cleaner', click: showWindow },
+    { label: 'Open Clean My Machine', click: showWindow },
     {
       label: 'Clean Now',
       enabled: !controller.isBusy,
@@ -185,7 +185,7 @@ function buildContextMenu(): Menu {
       click: (item) => void controller.updateSettings({ launchAtLogin: item.checked }),
     },
     { type: 'separator' },
-    { label: 'Quit Mac Cleaner', role: 'quit' },
+    { label: 'Quit Clean My Machine', role: 'quit' },
   ]);
 }
 

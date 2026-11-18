@@ -1,4 +1,4 @@
-# mac-cleaner-cli interactive demo
+# clean-my-machine interactive demo
 # Shows: launch → scan → category selection → summary → cancel
 
 Require npx
@@ -21,7 +21,7 @@ Set MarginFill "#282a36"
 Set Padding 10
 
 # Launch
-Type "npx mac-cleaner-cli"
+Type "npx clean-my-machine"
 Enter
 Sleep 500ms
 

@@ -185,7 +185,7 @@ function fdaBanner(s: AppState): HTMLElement | null {
     h(
       'div',
       { class: 'small' },
-      'Without it some caches cannot be read or removed. Enable Mac Cleaner in Privacy & Security → Full Disk Access.'
+      'Without it some caches cannot be read or removed. Enable Clean My Machine in Privacy & Security → Full Disk Access.'
     ),
     h('button', { class: 'btn link', onclick: () => void api.openFullDiskAccessSettings() }, 'Open System Settings →')
   );
@@ -652,8 +652,8 @@ function renderSettings(s: AppState): Child[] {
     h(
       'div',
       { class: 'footer' },
-      h('span', { class: 'muted small' }, `Mac Cleaner ${s.version}`),
-      h('button', { class: 'btn link', onclick: () => void api.quit() }, 'Quit Mac Cleaner')
+      h('span', { class: 'muted small' }, `Clean My Machine ${s.version}`),
+      h('button', { class: 'btn link', onclick: () => void api.quit() }, 'Quit Clean My Machine')
     ),
   ];
 }

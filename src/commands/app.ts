@@ -11,7 +11,7 @@ import { pipeline } from 'stream/promises';
 import type { ReadableStream as WebReadableStream } from 'stream/web';
 
 /**
- * Installs or updates the Mac Cleaner menu bar app from the latest GitHub release.
+ * Installs or updates the Clean My Machine menu bar app from the latest GitHub release.
  *
  * The app is not signed with an Apple Developer ID, so a .dmg downloaded with a
  * browser is flagged by Gatekeeper. Browsers mark downloads with the
@@ -20,11 +20,11 @@ import type { ReadableStream as WebReadableStream } from 'stream/web';
  * still checked against the SHA-256 digest GitHub publishes for the asset.
  */
 
-const REPO = 'guhcostan/mac-cleaner-cli';
+const REPO = 'jsj/clean-my-machine';
 const RELEASE_API = `https://api.github.com/repos/${REPO}/releases/latest`;
-export const APP_BUNDLE = 'Mac Cleaner.app';
-const APP_PROCESS = 'Mac Cleaner';
-const BUNDLE_ID = 'io.github.guhcostan.maccleaner';
+export const APP_BUNDLE = 'Clean My Machine.app';
+const APP_PROCESS = 'Clean My Machine';
+const BUNDLE_ID = 'io.github.jsj.clean-my-machine';
 
 export type AppArch = 'arm64' | 'x64';
 
@@ -96,12 +96,12 @@ export async function detectArch(deps: Pick<AppInstallDeps, 'run'>): Promise<App
   }
 }
 
-/** The zip of the app for this architecture, e.g. `Mac-Cleaner-1.4.0-arm64-mac.zip`. */
+/** The zip of the app for this architecture, e.g. `Clean-My-Machine-1.4.0-arm64-mac.zip`. */
 export function pickAsset(release: Release, arch: AppArch): ReleaseAsset {
-  const pattern = new RegExp(`^Mac-Cleaner-[0-9][0-9A-Za-z.+-]*-${arch}-mac\\.zip$`);
+  const pattern = new RegExp(`^Clean-My-Machine-[0-9][0-9A-Za-z.+-]*-${arch}-mac\\.zip$`);
   const asset = release.assets.find((a) => pattern.test(a.name));
   if (!asset) {
-    throw new Error(`Release ${release.tag_name} has no Mac Cleaner app for ${arch}.`);
+    throw new Error(`Release ${release.tag_name} has no Clean My Machine app for ${arch}.`);
   }
   if (!asset.browser_download_url.startsWith('https://github.com/')) {
     throw new Error(`Unexpected download URL for ${asset.name}.`);
@@ -119,7 +119,7 @@ export function expectedSha256(asset: ReleaseAsset): string {
 }
 
 async function fetchLatestRelease(deps: AppInstallDeps): Promise<Release> {
-  const headers: Record<string, string> = { Accept: 'application/vnd.github+json', 'User-Agent': 'mac-cleaner-cli' };
+  const headers: Record<string, string> = { Accept: 'application/vnd.github+json', 'User-Agent': 'clean-my-machine' };
   // Optional: avoids the unauthenticated API rate limit (60 requests/hour per IP), e.g. in CI.
   if (deps.githubToken) headers.Authorization = `Bearer ${deps.githubToken}`;
   const response = await deps.fetch(RELEASE_API, { headers });
@@ -135,7 +135,7 @@ async function fetchLatestRelease(deps: AppInstallDeps): Promise<Release> {
 
 /** Streams the asset to disk while hashing it; returns the SHA-256 hex digest. */
 async function download(url: string, destination: string, deps: AppInstallDeps): Promise<string> {
-  const response = await deps.fetch(url, { headers: { 'User-Agent': 'mac-cleaner-cli' } });
+  const response = await deps.fetch(url, { headers: { 'User-Agent': 'clean-my-machine' } });
   if (!response.ok || !response.body) {
     throw new Error(`Download failed (HTTP ${response.status}).`);
   }
@@ -181,7 +181,7 @@ async function quitRunningApp(deps: AppInstallDeps): Promise<void> {
   } catch {
     return; // not running
   }
-  deps.log(chalk.dim('Quitting the running Mac Cleaner…'));
+  deps.log(chalk.dim('Quitting the running Clean My Machine…'));
   try {
     await deps.run('/usr/bin/osascript', ['-e', `tell application id "${BUNDLE_ID}" to quit`]);
   } catch {
@@ -200,7 +200,7 @@ export async function installApp(
 
   const workDir = await deps.makeTempDir();
   try {
-    deps.log(`Downloading Mac Cleaner ${release.tag_name} (${arch === 'arm64' ? 'Apple Silicon' : 'Intel'})…`);
+    deps.log(`Downloading Clean My Machine ${release.tag_name} (${arch === 'arm64' ? 'Apple Silicon' : 'Intel'})…`);
     const zipPath = join(workDir, asset.name);
     const actual = await download(asset.browser_download_url, zipPath, deps);
     if (actual !== expected) {
@@ -231,7 +231,7 @@ export async function installApp(
     // app never shows the Gatekeeper prompt.
     await deps.run('/usr/bin/xattr', ['-dr', 'com.apple.quarantine', appPath]).catch(() => undefined);
 
-    deps.log(chalk.green(`✓ Mac Cleaner ${release.tag_name} installed in ${installDir}`));
+    deps.log(chalk.green(`✓ Clean My Machine ${release.tag_name} installed in ${installDir}`));
 
     if (options.open !== false) {
       await deps.run('/usr/bin/open', [appPath]);
@@ -246,7 +246,7 @@ export async function installApp(
 
 export async function appInstallCommand(options: AppInstallOptions): Promise<void> {
   if (process.platform !== 'darwin') {
-    throw new Error('The Mac Cleaner app only runs on macOS.');
+    throw new Error('The Clean My Machine app only runs on macOS.');
   }
   await installApp(options);
 }

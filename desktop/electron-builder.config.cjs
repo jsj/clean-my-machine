@@ -13,8 +13,8 @@ const canNotarize = Boolean(
 
 /** @type {import('electron-builder').Configuration} */
 module.exports = {
-  appId: 'io.github.guhcostan.maccleaner',
-  productName: 'Mac Cleaner',
+  appId: 'io.github.jsj.clean-my-machine',
+  productName: 'Clean My Machine',
   copyright: 'Copyright © guhcostan',
   directories: {
     output: 'release',
@@ -41,11 +41,11 @@ module.exports = {
     entitlementsInherit: 'build/entitlements.mac.plist',
     notarize: canNotarize,
     // Used by the zip target (the dmg target sets its own name below).
-    artifactName: 'Mac-Cleaner-${version}-${arch}-mac.${ext}',
+    artifactName: 'Clean-My-Machine-${version}-${arch}-mac.${ext}',
   },
   dmg: {
-    title: 'Mac Cleaner ${version}',
-    artifactName: 'Mac-Cleaner-${version}-${arch}.dmg',
+    title: 'Clean My Machine ${version}',
+    artifactName: 'Clean-My-Machine-${version}-${arch}.dmg',
   },
   publish: null,
 };

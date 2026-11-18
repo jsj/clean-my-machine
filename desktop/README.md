@@ -1,15 +1,15 @@
-# Mac Cleaner — Desktop (menu bar app)
+# Clean My Machine — Desktop (menu bar app)
 
 A macOS menu bar app that keeps your Mac clean on its own. It uses the same scanners as
-[`mac-cleaner-cli`](../README.md) (they are bundled straight from `../src`), so every
+[`clean-my-machine`](../README.md) (they are bundled straight from `../src`), so every
 category, safety rule and protected-path check of the CLI applies here too.
 
-<p align="center"><img src="build/icon.png" width="96" alt="Mac Cleaner icon"></p>
+<p align="center"><img src="build/icon.png" width="96" alt="Clean My Machine icon"></p>
 
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/app-tour-dark.png">
-    <img src="../assets/screenshots/app-tour-light.png" alt="Deep Clean, History and Settings of the Mac Cleaner menu bar app" width="100%">
+    <img src="../assets/screenshots/app-tour-light.png" alt="Deep Clean, History and Settings of the Clean My Machine menu bar app" width="100%">
   </picture>
 </p>
 
@@ -37,22 +37,20 @@ category, safety rule and protected-path check of the CLI applies here too.
 
 ## Install
 
-**Recommended**, one command that also updates an existing install:
+Build the app from source using the commands below. Once your GitHub release includes desktop assets, this command installs or updates the app:
 
 ```bash
-npx mac-cleaner-cli app install
-# or, without Node.js:
-curl -fsSL https://guhcostan.github.io/mac-cleaner-cli/install.sh | bash
+npx clean-my-machine app install
 ```
 
-Both pick the build for your Mac (Apple Silicon or Intel), download it from the latest
-GitHub release, check it against the SHA-256 digest GitHub publishes, and install it into
+The installer picks the build for your Mac (Apple Silicon or Intel), downloads it from the latest
+GitHub release, checks it against the SHA-256 digest GitHub publishes, and installs it into
 `/Applications` (or `~/Applications` if your account can't write there). Options:
 `--no-open` and `--dir <folder>` for the CLI; `MAC_CLEANER_NO_OPEN=1` and
-`MAC_CLEANER_INSTALL_DIR=<folder>` for the script.
+`MAC_CLEANER_INSTALL_DIR=<folder>` for [the standalone installer script](../docs/install.sh).
 
 Then grant **Full Disk Access** (System Settings → Privacy & Security → Full Disk Access →
-add Mac Cleaner). Without it macOS hides some caches from the app; the popover shows a
+add Clean My Machine). Without it macOS hides some caches from the app; the popover shows a
 banner with a shortcut when access is missing.
 
 ### Why no Gatekeeper warning?
@@ -65,14 +63,14 @@ the same as building the app yourself.
 
 ### Installing from the .dmg
 
-`Mac-Cleaner-<version>-arm64.dmg` (Apple Silicon) and `-x64.dmg` (Intel) are on
-[Releases](https://github.com/guhcostan/mac-cleaner-cli/releases). Because they are
-downloaded with a browser, macOS says *"Apple could not verify 'Mac Cleaner' is free of
+`Clean-My-Machine-<version>-arm64.dmg` (Apple Silicon) and `-x64.dmg` (Intel) are published with desktop builds on
+[Releases](https://github.com/jsj/clean-my-machine/releases). Because they are
+downloaded with a browser, macOS says *"Apple could not verify 'Clean My Machine' is free of
 malware"* the first time. Either:
 
 - open **System Settings → Privacy & Security** and click **Open Anyway** (on older macOS:
   right click the app → **Open** → **Open**), or
-- run `xattr -dr com.apple.quarantine "/Applications/Mac Cleaner.app"`.
+- run `xattr -dr com.apple.quarantine "/Applications/Clean My Machine.app"`.
 
 ### Limits of unsigned builds
 
@@ -105,7 +103,7 @@ bun run screenshots      # regenerate ../assets/screenshots from the built rende
 light and dark mode, with Playwright and Chromium. Set `CHROMIUM_PATH` to use a Chromium you
 already have.
 
-State (settings + history) is stored in `~/Library/Application Support/Mac Cleaner/state.json`.
+State (settings + history) is stored in `~/Library/Application Support/Clean My Machine/state.json`.
 
 ### Layout
 

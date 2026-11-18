@@ -1,7 +1,7 @@
 #!/bin/bash
-# Installs or updates the Mac Cleaner menu bar app from the latest GitHub release.
+# Installs or updates the Clean My Machine menu bar app from the latest GitHub release.
 #
-#   curl -fsSL https://guhcostan.github.io/mac-cleaner-cli/install.sh | bash
+#   curl -fsSL https://jsj.github.io/clean-my-machine/install.sh | bash
 #
 # The app is not signed with an Apple Developer ID, so a .dmg downloaded with a browser
 # triggers Gatekeeper's "Apple could not verify…" prompt. Browsers tag downloads with the
@@ -15,16 +15,16 @@
 
 set -euo pipefail
 
-REPO="guhcostan/mac-cleaner-cli"
-APP="Mac Cleaner.app"
-PROCESS_NAME="Mac Cleaner"
-BUNDLE_ID="io.github.guhcostan.maccleaner"
+REPO="jsj/clean-my-machine"
+APP="Clean My Machine.app"
+PROCESS_NAME="Clean My Machine"
+BUNDLE_ID="io.github.jsj.clean-my-machine"
 
 say() { printf '%s\n' "$*"; }
 fail() { printf 'Error: %s\n' "$*" >&2; exit 1; }
 
 main() {
-  [ "$(uname -s)" = "Darwin" ] || fail "Mac Cleaner only runs on macOS."
+  [ "$(uname -s)" = "Darwin" ] || fail "Clean My Machine only runs on macOS."
   for tool in curl plutil shasum ditto; do
     command -v "$tool" >/dev/null 2>&1 || fail "'$tool' is required but was not found."
   done
@@ -52,10 +52,10 @@ main() {
   local tag
   tag="$(json tag_name)" || fail "Unexpected response from the GitHub releases API."
 
-  # Find the zip for this architecture, e.g. Mac-Cleaner-1.4.0-arm64-mac.zip.
+  # Find the zip for this architecture, e.g. Clean-My-Machine-1.4.0-arm64-mac.zip.
   local i=0 name="" url="" digest="" found=""
   while name="$(json "assets.$i.name")"; do
-    if [[ "$name" =~ ^Mac-Cleaner-[0-9][0-9A-Za-z.+-]*-${arch}-mac\.zip$ ]]; then
+    if [[ "$name" =~ ^Clean-My-Machine-[0-9][0-9A-Za-z.+-]*-${arch}-mac\.zip$ ]]; then
       url="$(json "assets.$i.browser_download_url")" || true
       digest="$(json "assets.$i.digest")" || true
       found="yes"
@@ -64,14 +64,14 @@ main() {
     i=$((i + 1))
     [ "$i" -lt 200 ] || break
   done
-  [ -n "$found" ] || fail "Release $tag has no Mac Cleaner app for $arch."
+  [ -n "$found" ] || fail "Release $tag has no Clean My Machine app for $arch."
   [[ "$url" == https://github.com/* ]] || fail "Unexpected download URL for $name."
   [[ "$digest" =~ ^sha256:[0-9a-fA-F]{64}$ ]] \
     || fail "GitHub did not publish a SHA-256 digest for $name, so the download cannot be verified."
   local expected
   expected="$(printf '%s' "${digest#sha256:}" | tr 'A-F' 'a-f')"
 
-  say "Downloading Mac Cleaner $tag ($label)…"
+  say "Downloading Clean My Machine $tag ($label)…"
   curl -fL --progress-bar -H "User-Agent: mac-cleaner-install" "$url" -o "$WORK/app.zip" \
     || fail "Download failed."
 
@@ -103,14 +103,14 @@ main() {
   ditto "$WORK/extracted/$APP" "$staged"
 
   if pgrep -x "$PROCESS_NAME" >/dev/null 2>&1; then
-    say "Quitting the running Mac Cleaner…"
+    say "Quitting the running Clean My Machine…"
     osascript -e "tell application id \"$BUNDLE_ID\" to quit" >/dev/null 2>&1 || true
   fi
   rm -rf "$dir/$APP"
   mv "$staged" "$dir/$APP"
   xattr -dr com.apple.quarantine "$dir/$APP" 2>/dev/null || true
 
-  say "✓ Mac Cleaner $tag installed in $dir"
+  say "✓ Clean My Machine $tag installed in $dir"
 
   if [ "${MAC_CLEANER_NO_OPEN:-}" != "1" ]; then
     open "$dir/$APP"

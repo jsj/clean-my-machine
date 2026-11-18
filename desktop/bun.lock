@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "mac-cleaner-desktop",
+      "name": "clean-my-machine-desktop",
       "devDependencies": {
         "@types/node": "^25.0.3",
         "electron": "^44.5.1",
