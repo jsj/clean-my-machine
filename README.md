@@ -1,4 +1,4 @@
-# Clean My Machine
+![Clean My Machine. Find your biggest folders.](.README/cover.png)
 
 Find what's taking up space on your Mac and choose what to clear.
 
