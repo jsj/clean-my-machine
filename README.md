@@ -334,6 +334,10 @@ npx clean-my-machine app install
 
 ### Xcode simulator storage
 
+When simulator devices are present, running `clean-my-machine` in a terminal
+offers to review them before the regular scan. You can preview one device and
+choose which categories to clear.
+
 List simulator devices, shared runtime images, free space on the home volume, and
 host swap usage. Swap is diagnostic and is excluded from cleanup estimates.
 If at least 1 GiB of swap is in use and a simulator is booted, the scan shows

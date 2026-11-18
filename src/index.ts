@@ -4,7 +4,7 @@ import { Command, InvalidArgumentError, Option } from 'commander';
 import { ExitPromptError } from '@inquirer/core';
 import { appInstallCommand, cleanCommand, interactiveCommand, listCategories, maintenanceCommand, scanCommand, uninstallCommand } from './commands/index.js';
 import { initConfig, configExists, listBackups, cleanOldBackups, restoreBackup, loadConfig, formatSize } from './utils/index.js';
-import { simulatorCleanup, xcodeInventory } from './commands/xcode.js';
+import { reviewSimulatorsFromDefaultCommand, simulatorCleanup, xcodeInventory } from './commands/xcode.js';
 import { formatError, isDebugEnabled } from './utils/errors.js';
 import { CATEGORIES, type CategoryId, type Ecosystem } from './types.js';
 import pkg from '../package.json' with { type: 'json' };
@@ -101,6 +101,9 @@ program
   .option('-d, --dry-run', 'Show what would be deleted without deleting anything')
   .option('--no-progress', 'Disable progress bar')
   .action(action(async (options) => {
+    if (process.argv.length === 2 && process.stdin.isTTY && process.stdout.isTTY) {
+      await reviewSimulatorsFromDefaultCommand();
+    }
     const config = await loadConfig();
     await interactiveCommand({
       live: options.live ?? program.opts().live,

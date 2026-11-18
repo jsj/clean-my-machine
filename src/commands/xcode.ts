@@ -1,3 +1,5 @@
+import checkbox from '@inquirer/checkbox';
+import confirm from '@inquirer/confirm';
 import { execFile } from 'node:child_process';
 import { lstat, readdir, realpath, rmdir, statfs, unlink } from 'node:fs/promises';
 import { homedir } from 'node:os';
@@ -62,9 +64,9 @@ function size(bytes?: number) {
   return bytes === undefined ? 'size unavailable' : formatSize(bytes);
 }
 
-export async function xcodeInventory(json: boolean) {
+export async function xcodeInventory(json: boolean, knownDevices?: Awaited<ReturnType<typeof devices>>) {
   const [deviceList, runtimeResult, freeBytes, swap] = await Promise.all([
-    devices(),
+    knownDevices ?? devices(),
     simctl('runtime', 'list', '-j').then(raw => ({
       entries: Object.values(JSON.parse(raw) as Record<string, Runtime>),
       error: null,
@@ -97,6 +99,43 @@ export async function xcodeInventory(json: boolean) {
   if (slimHints.length) {
     console.log('\nOptional XC commands to reduce simulator memory use');
     for (const hint of slimHints) console.log(`  ${hint}`);
+  }
+}
+
+export async function reviewSimulatorsFromDefaultCommand() {
+  const deviceList = await devices().catch(() => []);
+  if (!deviceList.length || !await confirm({
+    message: 'Review Xcode simulator storage before scanning other files?',
+    default: false,
+  })) return;
+
+  await xcodeInventory(false, deviceList);
+  const [udid] = await checkbox({
+    message: 'Choose one simulator to preview, or press Enter to continue',
+    choices: deviceList.map(device => ({
+      name: `${device.name} · ${device.state} · ${size(device.dataPathSize)} · ${device.udid}`,
+      value: device.udid,
+    })),
+    validate: selected => selected.length <= 1 || 'Select one simulator at a time.',
+  });
+  if (!udid) return;
+
+  await simulatorCleanup(udid, {});
+  if (deviceList.find(device => device.udid === udid)?.state !== 'Shutdown') return;
+
+  const category = await checkbox({
+    message: 'Select simulator files to clear, or press Enter to skip',
+    choices: [
+      { name: 'Caches', value: 'caches' as const },
+      { name: 'Logs', value: 'logs' as const },
+      { name: 'Temporary files', value: 'temporary' as const },
+    ],
+  });
+  if (category.length && await confirm({
+    message: 'Permanently clear the selected files on this simulator?',
+    default: false,
+  })) {
+    await simulatorCleanup(udid, { category, confirm: true });
   }
 }
 
