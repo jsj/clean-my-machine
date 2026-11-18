@@ -338,15 +338,15 @@ Run `bunx clean-my-machine` and choose **Map largest folders**. Pick your home
 folder, internal data volume, or a mounted external volume. Select a folder to
 see its largest subfolders, ranked by allocated size. The map is read-only.
 
-Choose **Scan for cleanup candidates** from the same menu to review removable
+Choose **Scan for cleanup and review package updates** to review removable
 files. After a confirmed cleanup, the CLI reports the observed change in free
 space on the measured volumes.
 
 ### Maintain Homebrew, npm, and Bun packages
 
-Choose **Maintain Homebrew, npm, and Bun packages** in the main menu. Select Homebrew
-upgrade, Homebrew cleanup, global npm updates, or global Bun updates, then
-confirm the selection.
+After reviewing removable files, the default flow offers Homebrew upgrade,
+Homebrew cleanup, global npm updates, and global Bun updates. Select the tasks
+you want to run and confirm, or press Enter to skip.
 If you select both Homebrew tasks, cleanup follows a successful upgrade.
 The npm task uses the global prefix of the active npm installation and leaves
 project dependencies alone. The Bun task updates packages installed with

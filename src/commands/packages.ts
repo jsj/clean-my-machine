@@ -90,7 +90,7 @@ export async function packageMaintenance() {
   }
 
   const selected = await checkbox({
-    message: 'Select package maintenance tasks, or press Enter to go back',
+    message: 'Select package maintenance tasks, or press Enter to skip',
     choices: Object.entries(tasks).map(([value, task]) => ({ value, name: task.label })),
   });
   if (!selected.length || !await confirm({

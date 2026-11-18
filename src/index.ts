@@ -127,18 +127,21 @@ program
       const task = await select({
         message: 'Clean My Machine',
         choices: [
-          { name: 'Scan for cleanup candidates', value: 'clean' },
+          { name: 'Scan for cleanup and review package updates', value: 'clean' },
           { name: 'Map largest folders', value: 'storage' },
           { name: 'Review Xcode simulator storage', value: 'xcode' },
-          { name: 'Maintain Homebrew, npm, and Bun packages', value: 'packages' },
           { name: 'Exit', value: 'exit' },
         ],
       });
       if (task === 'exit') return;
-      if (task === 'clean') await scanForCleanup();
-      else if (task === 'storage') await browseLargestFolders();
-      else if (task === 'xcode') await reviewSimulatorsFromDefaultCommand();
-      else await packageMaintenance();
+      if (task === 'clean') {
+        await scanForCleanup();
+        await packageMaintenance();
+      } else if (task === 'storage') {
+        await browseLargestFolders();
+      } else {
+        await reviewSimulatorsFromDefaultCommand();
+      }
     }
   }));
 
