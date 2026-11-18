@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 
-import { Command, InvalidArgumentError } from 'commander';
+import { Command, InvalidArgumentError, Option } from 'commander';
 import { ExitPromptError } from '@inquirer/core';
 import { appInstallCommand, cleanCommand, interactiveCommand, listCategories, maintenanceCommand, scanCommand, uninstallCommand } from './commands/index.js';
 import { initConfig, configExists, listBackups, cleanOldBackups, restoreBackup, loadConfig, formatSize } from './utils/index.js';
+import { simulatorCleanup, xcodeInventory } from './commands/xcode.js';
 import { formatError, isDebugEnabled } from './utils/errors.js';
 import { CATEGORIES, type CategoryId, type Ecosystem } from './types.js';
 import pkg from '../package.json' with { type: 'json' };
@@ -198,6 +199,24 @@ program
       dryRun: options.dryRun ?? program.opts().dryRun,
     });
   }));
+
+const xcode = program.command('xcode').description('Inspect Xcode simulator storage and host swap');
+
+xcode.command('scan')
+  .description('List simulator devices, shared runtimes, and host swap')
+  .option('--json', 'Output JSON')
+  .action(action(async options => xcodeInventory(options.json)));
+
+xcode.command('clean')
+  .description('Preview or clean caches, logs, and temporary files for one simulator')
+  .argument('<udid>', 'Exact simulator UDID')
+  .addOption(new Option('--category <category...>', 'Select categories').choices(['caches', 'logs', 'temporary']))
+  .option('--confirm', 'Permanently clear selected files on a shut-down simulator')
+  .option('--dry-run', 'Preview cleanup')
+  .option('--json', 'Output JSON')
+  .action(action(async (udid, options) => simulatorCleanup(udid, {
+    ...options, dryRun: options.dryRun ?? program.opts().dryRun,
+  })));
 
 const app = program
   .command('app')

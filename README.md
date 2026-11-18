@@ -332,6 +332,33 @@ npx clean-my-machine backup --clean
 npx clean-my-machine app install
 ```
 
+### Xcode simulator storage
+
+List simulator devices, shared runtime images, free space on the home volume, and
+host swap usage. Swap is diagnostic and is excluded from cleanup estimates.
+If at least 1 GiB of swap is in use and a simulator is booted, the scan shows
+the optional XC command to slim that device.
+
+```sh
+npx clean-my-machine xcode scan
+npx clean-my-machine xcode scan --json
+```
+
+Preview cleanup for a device using its UDID from the scan. Shutdown is required
+before applying a cleanup. Select one or more categories with `--category`, or
+omit it to preview or clear the device's caches, logs, and temporary files.
+
+```sh
+npx clean-my-machine xcode clean <UDID>
+npx clean-my-machine xcode clean <UDID> --category caches --confirm
+```
+
+The cleanup clears the contents of the device's `Library/Caches`,
+`Library/Logs`, and `tmp` directories. The preview reports installed apps,
+app data and documents, shared app data, and media for reference. Shared
+runtime images are listed by the inventory. The applied cleanup reports the
+observed change in available space on the device's volume.
+
 ### Backups (opt-in)
 
 By default, cleaning is **permanent**: files are removed with `rm -rf` and do
