@@ -12,6 +12,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - CI installs the app with both installers on macOS and checks the bundle, its signature and that it isn't quarantined
 - README screenshots of the menu bar app (light and dark), generated from the real UI with sample data by `bun run screenshots` in `desktop/`
 
+## [1.4.1]
+
+### Added
+
+- One interactive session for file cleanup, package maintenance, folder mapping, and Xcode simulator review.
+- Read-only folder maps for the home folder, internal data volume, and mounted external drives.
+- Xcode simulator storage and host swap diagnostics, with confirmed cleanup of selected caches, logs, and temporary files on a shut-down device.
+- Optional Homebrew upgrade and cleanup, global npm updates, and global Bun updates after file review.
+- Observed free-space changes on the measured volumes after cleanup and package maintenance.
+
 ## [1.4.0] - 2026-09-30
 
 ### Added
