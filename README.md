@@ -6,8 +6,6 @@ Find what's taking up space on your Mac and choose what to clear.
 bunx clean-my-machine
 ```
 
-You can also run `npx clean-my-machine` with Node.js 20.12 or later.
-
 ## Use it
 
 - **Scan for cleanup and review package updates** finds caches, logs, Xcode DerivedData, and old build artifacts. Review the files, select what to clear, then confirm. Afterward you can run Homebrew cleanup or upgrade and update global npm or Bun packages.
