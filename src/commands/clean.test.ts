@@ -186,7 +186,13 @@ describe('clean command', () => {
     consoleSpy.mockRestore();
   });
 
-  it('should clean safe categories with --all --yes', async () => {
+  it('cleans with --all --yes without prompting even in a terminal', async () => {
+    vi.spyOn(process, 'stdin', 'get').mockReturnValue(
+      Object.assign(Object.create(process.stdin), { isTTY: true }),
+    );
+    vi.spyOn(process, 'stdout', 'get').mockReturnValue(
+      Object.assign(Object.create(process.stdout), { isTTY: true }),
+    );
     const mockScanner = {
       category: trashCategory,
       scan: vi.fn(),
@@ -219,6 +225,7 @@ describe('clean command', () => {
     expect(result).not.toBeNull();
     expect(result?.totalFreedSpace).toBe(1000);
     expect(mockScanner.clean).toHaveBeenCalled();
+    expect(inquirerPrompts.confirm).not.toHaveBeenCalled();
 
     consoleSpy.mockRestore();
   });

@@ -12,6 +12,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - CI installs the app with both installers on macOS and checks the bundle, its signature and that it isn't quarantined
 - README screenshots of the menu bar app (light and dark), generated from the real UI with sample data by `bun run screenshots` in `desktop/`
 
+## [1.4.2]
+
+### Fixed
+
+- Skip the donation prompt after unattended cleanup so a successful run exits with status 0.
+
 ## [1.4.1]
 
 ### Added

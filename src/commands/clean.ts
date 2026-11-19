@@ -192,11 +192,14 @@ export async function cleanCommand(options: CleanCommandOptions): Promise<CleanS
   cleanProgress?.finish();
 
   if (options.dryRun) console.log(`[DRY RUN] Would free ${formatSize(cleanResults.wouldFreeSpace ?? 0)}; would back up ${formatSize(cleanResults.wouldBackUpSize ?? 0)}`);
-  else await printCleanResults(cleanResults);
+  else printCleanResults(cleanResults);
 
   // Failures during deletion must be visible to callers (CI, cron, scripts)
   if (cleanResults.totalErrors > 0) {
     process.exitCode = 1;
+  } else if (!options.dryRun && !options.yes && process.stdin.isTTY && process.stdout.isTTY
+      && cleanResults.totalCleanedItems > 0 && cleanResults.totalFreedSpace > 0) {
+    await showDonationMessage();
   }
 
   return cleanResults;
@@ -304,7 +307,7 @@ async function selectItemsInteractively(
   return selectedItems;
 }
 
-async function printCleanResults(summary: CleanSummary): Promise<void> {
+function printCleanResults(summary: CleanSummary): void {
   console.log();
   console.log(chalk.bold.green('✓ Cleaning Complete'));
   console.log(chalk.dim('─'.repeat(50)));
@@ -330,10 +333,6 @@ async function printCleanResults(summary: CleanSummary): Promise<void> {
   }
 
   console.log();
-
-  if (summary.totalCleanedItems > 0 && summary.totalFreedSpace > 0) {
-    await showDonationMessage();
-  }
 }
 
 async function showDonationMessage(): Promise<void> {
