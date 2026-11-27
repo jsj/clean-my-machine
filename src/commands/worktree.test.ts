@@ -154,3 +154,50 @@ it('protects a locked worktree and explains why', async () => {
   expect(confirm).not.toHaveBeenCalled();
   expect(existsSync(target)).toBe(true);
 });
+
+it('returns to the menu when there are no worktrees', async () => {
+  vi.mocked(runScans).mockResolvedValue({ results: [], totalItems: 0, totalSize: 0 });
+
+  await reviewAgentWorktrees();
+
+  expect(select).not.toHaveBeenCalled();
+});
+
+it('reports scan errors before offering removal', async () => {
+  vi.mocked(runScans).mockResolvedValue({
+    results: [{ category: CATEGORIES['git-worktrees'], items: [], totalSize: 0, error: 'Scan failed' }],
+    totalItems: 0,
+    totalSize: 0,
+  });
+
+  await expect(reviewAgentWorktrees()).rejects.toThrow('Scan failed');
+  expect(select).not.toHaveBeenCalled();
+});
+
+it('leaves the checkout intact when returning to the menu or declining removal', async () => {
+  vi.mocked(select).mockResolvedValueOnce(null);
+  await reviewAgentWorktrees();
+  expect(confirm).not.toHaveBeenCalled();
+
+  vi.mocked(confirm).mockResolvedValueOnce(false);
+  await reviewAgentWorktrees();
+  expect(confirm).toHaveBeenCalledOnce();
+  expect(existsSync(target)).toBe(true);
+});
+
+it('preserves a directory that Git cannot verify as a linked checkout', async () => {
+  await writeFile(join(target, '.git'), 'gitdir: /missing-worktree-metadata\n');
+  await reviewAgentWorktrees();
+
+  expect(confirm).not.toHaveBeenCalled();
+  expect(existsSync(target)).toBe(true);
+});
+
+it('preserves a worktree while a Git operation is in progress', async () => {
+  const gitDir = git(target, 'rev-parse', '--absolute-git-dir').trim();
+  await writeFile(join(gitDir, 'MERGE_HEAD'), git(target, 'rev-parse', 'HEAD'));
+  await reviewAgentWorktrees();
+
+  expect(confirm).not.toHaveBeenCalled();
+  expect(existsSync(target)).toBe(true);
+});

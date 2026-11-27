@@ -1,6 +1,6 @@
 {
   "name": "clean-my-machine",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "macOS CLI tool to free up disk space — removes caches, logs, Homebrew leftovers, Xcode DerivedData, and junk files",
   "type": "module",
   "bin": {
