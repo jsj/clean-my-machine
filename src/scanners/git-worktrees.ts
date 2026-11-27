@@ -1,5 +1,5 @@
 import { spawn } from 'child_process';
-import { readdir, readFile, stat, lstat } from 'fs/promises';
+import { readdir, readFile, stat, lstat, realpath } from 'fs/promises';
 import { basename, dirname, join } from 'path';
 import { BaseScanner } from './base-scanner.js';
 import { CATEGORIES, type CleanableItem, type ScanResult, type ScannerOptions } from '../types.js';
@@ -180,7 +180,8 @@ export class GitWorktreesScanner extends BaseScanner {
     },
     mainRepoHint?: string
   ): Promise<void> {
-    if (ctx.discovered.has(worktreePath)) return;
+    const canonicalPath = await realpath(worktreePath).catch(() => null);
+    if (!canonicalPath || ctx.discovered.has(canonicalPath)) return;
 
     const gitFile = join(worktreePath, '.git');
     const gitDir = await readGitDirPointer(gitFile);
@@ -197,7 +198,8 @@ export class GitWorktreesScanner extends BaseScanner {
     const orphaned = !(await exists(gitDir));
     if (!orphaned && ageDays < ctx.daysOld) return;
 
-    ctx.discovered.set(worktreePath, {
+    if (ctx.discovered.has(canonicalPath)) return;
+    ctx.discovered.set(canonicalPath, {
       path: worktreePath,
       modifiedAt,
       mainRepo: mainRepoHint ?? inferMainRepo(gitDir),

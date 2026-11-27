@@ -7,6 +7,7 @@ bunx clean-my-machine
 ```
 
 - Scan for caches, logs, and old build files. Choose what to delete, then review Homebrew, npm, and Bun updates.
+- Review older Git worktrees and confirm removal of eligible clean checkouts.
 - Browse your largest folders by size, including on external drives.
 - See what Xcode simulators are using. Shut down a simulator before clearing its caches, logs, or temporary files.
 

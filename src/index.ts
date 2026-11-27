@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import select from '@inquirer/select';
+import { reviewAgentWorktrees } from './commands/worktree.js';
 import { packageMaintenance } from './commands/packages.js';
 import { browseLargestFolders } from './commands/storage.js';
 import { Command, InvalidArgumentError, Option } from 'commander';
@@ -128,6 +129,7 @@ program
         message: 'Clean My Machine',
         choices: [
           { name: 'Scan for cleanup and review package updates', value: 'clean' },
+          { name: 'Review agent worktrees', value: 'worktrees' },
           { name: 'Map largest folders', value: 'storage' },
           { name: 'Review Xcode simulator storage', value: 'xcode' },
           { name: 'Exit', value: 'exit' },
@@ -137,6 +139,8 @@ program
       if (task === 'clean') {
         await scanForCleanup();
         await packageMaintenance();
+      } else if (task === 'worktrees') {
+        await reviewAgentWorktrees();
       } else if (task === 'storage') {
         await browseLargestFolders();
       } else {
